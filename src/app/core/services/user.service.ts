@@ -3,12 +3,13 @@ import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { IUser } from '../models/post-data';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = "https://dummyapi.io/data/v1/";
+  private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
