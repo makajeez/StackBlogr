@@ -16,3 +16,10 @@ export interface IUser {
     lastName?: string,
     picture?: string,
 }
+
+export interface ReturnedData {
+    data: Array<PostData>,
+    total: number,
+    page: number,
+    limit: number
+}
