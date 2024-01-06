@@ -5,6 +5,7 @@ import { CardComponent } from '../../shared/components/card/card.component';
 import { PostData, ReturnedData } from '../../core/models/post-data';
 import { PostService } from '../../core/services/post.service';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -21,19 +22,31 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  loading: boolean = false;
   currentPost!: PostData;
-  postData!: any
+  postData!: Array<PostData>
   totalData: number = 0
+  page: number = 0
+  limit: number = 0
+  addPostFormGroup!: FormGroup;
   postService = inject(PostService)
 
-  constructor() {
+  constructor(private _fb: FormBuilder) {
     this.getPosts()
   }
   log(post: any) {
     console.log(post)
   }
   ngOnInit() {
+
+    this.addPostFormGroup = this._fb.group({
+      text: ['', [Validators.required, Validators.maxLength(50)]],
+      image: ['', [Validators.required, Validators.maxLength(50)]],
+      likes: ['', [Validators.required, Validators.maxLength(50)]],
+      tags: ['', [Validators.required, Validators.maxLength(50)]],
+      owner: ['', [Validators.required, Validators.maxLength(50)]],
+    })
+
+
       // this.postData  = [
       // {
       //     "id": "60d21bad67d0d8992e610daf",
@@ -229,11 +242,13 @@ export class HomeComponent {
       
   }
   
-  getPosts() {
-    return this.postService.getPosts().subscribe({
+  getPosts(page: number = 1, limit: number = 10) {
+    return this.postService.getPosts(page, limit).subscribe({
       next: (data : ReturnedData) => {
        this.postData = data.data;
        this.totalData = data.total;
+       this.limit = data.limit;
+       this.page = data.page;
        console.log(data)
       },
       error: err => {
@@ -244,6 +259,18 @@ export class HomeComponent {
 
   deletePost(id: string) {
     this.postService.deletePost(id).subscribe({
+      next: data => {
+        this.getPosts()
+        // console.log(data)
+      },
+      error: error => {
+        console.error(error)
+      }
+    })
+  }
+
+  addPost() {
+    this.postService.createPost().subscribe({
       next: data => {
         this.getPosts()
         // console.log(data)
