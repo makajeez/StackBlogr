@@ -40,10 +40,10 @@ export class HomeComponent {
 
     this.addPostFormGroup = this._fb.group({
       text: ['', [Validators.required, Validators.maxLength(50)]],
-      image: ['', [Validators.required, Validators.maxLength(50)]],
-      likes: ['', [Validators.required, Validators.maxLength(50)]],
-      tags: ['', [Validators.required, Validators.maxLength(50)]],
-      owner: ['', [Validators.required, Validators.maxLength(50)]],
+      image: ['', Validators.required],
+      likes: [0, ],
+      tags: [[], Validators.required],
+      owner: ['', Validators.required],
     })
 
 
@@ -270,14 +270,15 @@ export class HomeComponent {
   }
 
   addPost() {
-    this.postService.createPost().subscribe({
-      next: data => {
-        this.getPosts()
-        // console.log(data)
-      },
-      error: error => {
-        console.error(error)
-      }
-    })
+    // this.postService.createPost(this.addPostFormGroup.value).subscribe({
+    //   next: data => {
+    //     this.getPosts()
+    //     // console.log(data)
+    //   },
+    //   error: error => {
+    //     console.error(error)
+    //   }
+    // })
+    console.log(this.addPostFormGroup)
   }
 }
