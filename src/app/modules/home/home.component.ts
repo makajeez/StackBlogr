@@ -30,6 +30,7 @@ export class HomeComponent {
   page: number = 0
   limit: number = 0
   addPostFormGroup!: FormGroup;
+  editPostFormGroup!: FormGroup;
   postService = inject(PostService)
 
   constructor(private _fb: FormBuilder) {
@@ -41,6 +42,13 @@ export class HomeComponent {
   ngOnInit() {
 
     this.addPostFormGroup = this._fb.group({
+      text: ['', [Validators.required, Validators.maxLength(50)]],
+      image: ['', Validators.required],
+      likes: [0, ],
+      tags: [["shopping", 'shoes','men'], Validators.required],
+      owner: ['60d0fe4f5311236168a10a1e', Validators.required], //Niklas
+    })
+    this.editPostFormGroup = this._fb.group({
       text: ['', [Validators.required, Validators.maxLength(50)]],
       image: ['', Validators.required],
       likes: [0, ],
