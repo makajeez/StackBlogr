@@ -5,7 +5,7 @@ import { CardComponent } from '../../shared/components/card/card.component';
 import { PostData, ReturnedData } from '../../core/models/post-data';
 import { PostService } from '../../core/services/post.service';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -34,10 +34,7 @@ export class HomeComponent {
   postService = inject(PostService)
 
   constructor(private _fb: FormBuilder) {
-    // this.getPosts()
-  }
-  log(post: any) {
-    console.log(post)
+    this.getPosts()
   }
   ngOnInit() {
 
@@ -49,11 +46,11 @@ export class HomeComponent {
       owner: ['60d0fe4f5311236168a10a1e', Validators.required], //Niklas
     })
     this.editPostFormGroup = this._fb.group({
+      // id: '',
       text: ['', [Validators.required, Validators.maxLength(50)]],
       image: ['', Validators.required],
-      likes: [0, ],
-      tags: [["shopping", 'shoes','men'], Validators.required],
-      owner: ['60d0fe4f5311236168a10a1e', Validators.required], //Niklas
+      likes: ['', Validators.required],
+      tags: ['', Validators.required]
     })
 
   }
@@ -107,29 +104,40 @@ export class HomeComponent {
     })
   }
 
+  updatePost() {
+    this.postService.updatePost(this.currentPost.id, this.editPostFormGroup.value)
+    .subscribe({
+      next: data => {
+        console.log('Form Value: ',this.addPostFormGroup.value)
+        this.getPosts()
+        console.log('Return Data: ',data)
+        this.addPostFormGroup.reset(
+          {
+            text: '',
+            image: '',
+            likes: 0,
+            tags: ["shopping", 'shoes','men'],
+            owner: '60d0fe4f5311236168a10a1e', //Niklas
+          }
+        )
+      },
+      error: error => {
+        console.error(error)
+      }
+    })
+    // console.log(this.currentPost.id, this.editPostFormGroup.value);
+    
+  }
+
   getUrl(event: any) {
     this.addPostFormGroup.controls['image'].setValue(event.target.src)
+    this.editPostFormGroup.controls['image'].setValue(event.target.src)
   }
-  // {
-  //   "id": "6599fd91499cf7df1f3df7e8",
-  //   "image": "",
-  //   "likes": 0,
-  //   "link": "",
-  //   "tags": [
-  //       "shopping",
-  //       "shoes",
-  //       "men"
-  //   ],
-  //   "text": "",
-  //   "publishDate": "2024-01-07T01:25:37.588Z",
-  //   "updatedDate": "2024-01-07T01:25:37.588Z",
-  //   "owner": {
-  //       "id": "60d0fe4f5311236168a10a1e",
-  //       "title": "mr",
-  //       "firstName": "Niklas",
-  //       "lastName": "Baltzersen",
-  //       "picture": "https://randomuser.me/api/portraits/med/men/2.jpg"
-  //   }
-// }
+  
+  getData(post: any){  
+    this.editPostFormGroup.patchValue(post)
+    this.currentPost = post;
+  }
+ 
 
 }
