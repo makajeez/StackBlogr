@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*,body{
+  scroll-behavior:smooth;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;

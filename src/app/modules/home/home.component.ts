@@ -243,6 +243,7 @@ export class HomeComponent {
   }
   
   getPosts(page: number = 1, limit: number = 10) {
+    window.scroll(0,0)
     return this.postService.getPosts(page, limit).subscribe({
       next: (data : ReturnedData) => {
        this.postData = data.data;
