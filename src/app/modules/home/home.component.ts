@@ -33,7 +33,7 @@ export class HomeComponent {
   postService = inject(PostService)
 
   constructor(private _fb: FormBuilder) {
-    this.getPosts()
+    // this.getPosts()
   }
   log(post: any) {
     console.log(post)
@@ -50,7 +50,7 @@ export class HomeComponent {
 
   }
   
-  getPosts(page: number = 1, limit: number = 100) {
+  getPosts(page: number = 1, limit: number = 10) {
     window.scroll(0,0)
     return this.postService.getPosts(page, limit).subscribe({
       next: (data : ReturnedData) => {
@@ -58,7 +58,6 @@ export class HomeComponent {
        this.totalData = data.total;
        this.limit = data.limit;
        this.page = data.page;
-       console.log(data)
       },
       error: err => {
         console.error(err)
@@ -70,7 +69,7 @@ export class HomeComponent {
     this.postService.deletePost(id).subscribe({
       next: data => {
         this.getPosts()
-        // console.log(data)
+        console.log(data)
       },
       error: error => {
         console.error(error)
@@ -81,8 +80,18 @@ export class HomeComponent {
   addPost() {
     this.postService.createPost(this.addPostFormGroup.value).subscribe({
       next: data => {
+        console.log('Form Value: ',this.addPostFormGroup.value)
         this.getPosts()
-        console.log(data)
+        console.log('Return Data: ',data)
+        this.addPostFormGroup.reset(
+          {
+            text: '',
+            image: '',
+            likes: 0,
+            tags: ["shopping", 'shoes','men'],
+            owner: '60d0fe4f5311236168a10a1e', //Niklas
+          }
+        )
       },
       error: error => {
         console.error(error)

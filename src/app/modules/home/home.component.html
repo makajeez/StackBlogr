@@ -2,7 +2,7 @@
 <div class="mx-auto 2xl:px-40 xl:px-20 px-8 py-20">
 
     <div id="speed-dial-menu-horizontal" class="tooltip flex items-center me-4 space-x-2 ltr:space-x-reverse">
-        <button type="button" data-modal-target="addPost" data-modal-toggle="addPost" (click)="addPost()" class="flex justify-center items-center w-[52px] h-[52px] text-white hover:text-gray-500 bg-gray-500 rounded-full border border-indigo-900 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
+        <button type="button" data-modal-target="addPost" data-modal-toggle="addPost" class="flex justify-center items-center w-[52px] h-[52px] text-white hover:text-gray-500 bg-gray-500 rounded-full border border-indigo-900 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
             <span class="material-symbols-outlined">add</span>
         </button>
         <span class="tooltiptext">Add Post</span>
@@ -72,12 +72,12 @@
         <div class="relative flex -end-0 bottom-6 group">
             <div class="flex flex-col items-center">
                 <!-- Help text -->
-                <span class="text-sm text-gray-700 dark:text-gray-400">
-                    Showing <span class="font-semibold text-gray-900 dark:text-white">1</span> to <span class="font-semibold text-gray-900 dark:text-white">10</span> of <span class="font-semibold text-gray-900 dark:text-white">{{this.totalData}}</span> Entries
-                </span>
+                <!-- <span class="text-sm text-gray-700 dark:text-gray-400">
+                    Showing <span class="font-semibold text-gray-900 dark:text-white">{{(limit-limit) + 1}}</span> to <span class="font-semibold text-gray-900 dark:text-white">{{(limit + limit)}}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{this.totalData}}</span> Entries
+                </span> -->
                 <div class="inline-flex mt-2 xs:mt-0">
                 <!-- Buttons -->
-                <button [disabled]="page===1" (click)="getPosts(page-1, limit)" class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                <button [ngClass]="{'bg-gray-400': page===1, 'hover:bg-gray-400': page===1 }" [disabled]="page===1" (click)="getPosts(page-1, limit)" class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                     <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
                     </svg>
@@ -205,11 +205,12 @@
                             <div>
                                 <img  class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg" alt="">
                             </div>
+                            
                             <div>
-                                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
+                                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
                             </div>
                             <div>
-                                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
+                                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
                             </div>
                             <div>
                                 <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
@@ -217,10 +218,10 @@
                         </div>
                         <div class="grid grid-cols-4 gap-4 mb-4">
                             <div>
-                                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                            </div>
+                                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
+                            </div> 
                             <div>
-                                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
+                                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
                             </div>
                             <div>
                                 <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg" alt="">
@@ -244,10 +245,8 @@
                             </div>
                         </div>
                     </div>
-
-                   <div>{{ addPostFormGroup.value | json }}</div> 
                 </div>
-                <button type="submit" (click)="addPost()" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button data-modal-hide="addPost" type="submit" (click)="addPost()" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                     Add new post
                 </button>
