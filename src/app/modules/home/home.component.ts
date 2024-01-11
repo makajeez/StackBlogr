@@ -34,7 +34,7 @@ export class HomeComponent {
   postService = inject(PostService)
 
   constructor(private _fb: FormBuilder) {
-    this.getPosts()
+    // this.getPosts()
   }
   ngOnInit() {
 
