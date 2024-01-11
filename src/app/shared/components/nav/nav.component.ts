@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IUser } from '../../../core/models/post-data';
 
 @Component({
   selector: 'app-nav',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
+  authenticated: boolean = false;
+  currentUser: IUser = {};
 
 }
