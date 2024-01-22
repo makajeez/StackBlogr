@@ -6,6 +6,7 @@ import { PostData, ReturnedData } from '../../core/models/post-data';
 import { PostService } from '../../core/services/post.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule, FormControl } from '@angular/forms';
+import { CommentService } from '../../core/services/comment.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule, F
     CardComponent,
     RouterOutlet
   ],
-  providers: [ PostService ],
+  providers: [ PostService, CommentService ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -32,6 +33,7 @@ export class HomeComponent {
   addPostFormGroup!: FormGroup;
   editPostFormGroup!: FormGroup;
   postService = inject(PostService)
+  commentService = inject(CommentService)
 
   constructor(private _fb: FormBuilder) {
     // this.getPosts()
@@ -53,16 +55,34 @@ export class HomeComponent {
       tags: ['', Validators.required]
     })
 
+    // this.commentService.getCommentsbyPost('60d21b4967d0d8992e610c8f').subscribe({
+    //   next: data => {
+    //     console.log(data);
+    //   },
+    //   error: err => {
+    //     console.error(err)
+    //   }
+    // })
+    // this.commentService.getComments().subscribe({
+    //   next: data => {
+    //     console.log(data);
+    //   },
+    //   error: err => {
+    //     console.error(err)
+    //   }
+    // })
   }
   
-  getPosts(page: number = 1, limit: number = 10) {
-    window.scroll(0,0)
+  getPosts(page: number = 1, limit: number = 50) {
     return this.postService.getPosts(page, limit).subscribe({
       next: (data : ReturnedData) => {
-       this.postData = data.data;
-       this.totalData = data.total;
-       this.limit = data.limit;
-       this.page = data.page;
+        this.postData = data.data;
+        console.log(data);
+        
+        this.totalData = data.total;
+        this.limit = data.limit;
+        this.page = data.page;
+        window.scroll(0,0);
       },
       error: err => {
         console.error(err)
@@ -138,6 +158,5 @@ export class HomeComponent {
     this.editPostFormGroup.patchValue(post)
     this.currentPost = post;
   }
- 
 
 }
