@@ -1,16 +1,45 @@
-<div class="hover:bg-gray-900 hover:text-white transition duration-300 max-w-sm rounded overflow-hidden shadow-lg">
+<!-- <div class="hover:bg-gray-900 hover:text-white transition duration-300 max-w-sm rounded overflow-hidden shadow-lg">
     <div class="py-4 px-8">
-        <img [src]="postData.owner.picture" class="rounded-full h-12 w-12 mb-4">
-        <a href="#">
-            <h4 class="text-lg mb-3 font-semibold">{{postData.owner.firstName}}</h4>
-        </a>
-        <p class="mb-2 text-sm ">{{postData.text}}</p>
+       
+        <div class="inline-flex gap-1">
+            <img [src]="post.owner.picture" class="rounded-full h-12 w-12 mb-4 mr-1">
+            <div class="mr-1">
+                <span class="text-sm mr-2 font-light whitespace-nowrap"><strong>Author:</strong> {{post.owner.firstName}} {{post.owner.lastName}}</span><br>
+                <span class="text-sm mr-2 font-light"><strong>Posted:</strong> {{post.publishDate | date }}</span>
+            </div>
+                <button type="button" (click)="getData(post)" data-modal-target="edit-modal" data-modal-toggle="edit-modal" class="tooltip relative inline-flex items-center p-1 text-sm text-center">
+                    <span class="material-symbols-outlined">
+                        edit
+                    </span>
+                    <span class="tooltiptext">edit</span>
+                </button>
+                <button (click)="currentPost = post" data-modal-target="deleteModal" data-modal-toggle="deleteModal" type="button" class="tooltip relative inline-flex items-center p-1 text-sm text-center">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                    <span class="tooltiptext">delete post</span>
+                </button>
 
-        <img [src]="postData.image" class="w-100">
+                
+        </div>
+        <figure class="relative max-w-sm transition-all duration-300 filter grayscale hover:grayscale-0">
+            <img style="width: 100%; height:240px" class="rounded-lg" [src]="post.image" alt="image description">
+            <figcaption class="absolute px-4 text-lg text-white bottom-2">
+                <button type="button" class="relative inline-flex items-center p-1 text-lg font-bold text-center text-gray-900 bg-indigo-300 rounded-lg hover:bg-indigo-400">
+                    <span class="material-symbols-outlined">
+                        thumb_up
+                        </span>
+                    <span class="sr-only">Likes</span>
+                      <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-gray-900 bg-indigo-400 border-2 border-indigo-400 rounded-full -top-4 -end-4 dark:border-gray-900">{{post.likes}}</div>
+                    </button>
+            </figcaption>
+        </figure>
 
+        @for(tag of post.tags; track tag) {
+                <span class="bg-indigo-100 text-black text-xs font-edium me-1 px-1.5 py-0.5 rounded ">{{tag}} </span>
+            }
         <hr class="mt-4">
-        <span class="text-xs">ARTICLE</span>
-        &nbsp;<span class="text-xs text-gray-500">PROCESS</span>
+        <p class="mb-2 text-sm ">{{post.text}}</p>
+
     </div>
-    <div>{{postData | json }}</div>
-</div>
+</div> -->

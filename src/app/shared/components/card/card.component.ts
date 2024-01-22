@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common'
-import { PostData } from '../../../core/models/post-data';
+import { PostData, ReturnedData } from '../../../core/models/post-data';
 
 @Component({
   selector: 'app-card',
@@ -12,5 +12,10 @@ import { PostData } from '../../../core/models/post-data';
   styleUrl: './card.component.css'
 })
 export class CardComponent {
-  @Input() postData!: PostData 
+  @Input() post!: PostData 
+  // @Output() data: EventEmitter<I>
+
+  sendOutData() {
+
+  }
 }
