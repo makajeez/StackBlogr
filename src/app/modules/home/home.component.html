@@ -49,9 +49,9 @@
                         <figcaption class="absolute px-4 text-lg text-white bottom-2">
                             <button type="button" class="relative inline-flex items-center p-1 text-lg font-bold text-center text-gray-900 bg-indigo-300 rounded-lg hover:bg-indigo-400">
                                 <span class="material-symbols-outlined">
-                                    comment
+                                    thumb_up
                                     </span>
-                                <span class="sr-only">Notifications</span>
+                                <span class="sr-only">Likes</span>
                                   <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-gray-900 bg-indigo-400 border-2 border-indigo-400 rounded-full -top-4 -end-4 dark:border-gray-900">{{post.likes}}</div>
                                 </button>
                         </figcaption>
@@ -103,7 +103,7 @@
 <!-- Modals -->
 
 <!-- Delete post modal -->
-<div id="deleteModal" tabindex="-13" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="deleteModal" tabindex="3" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="deleteModal">
@@ -127,7 +127,7 @@
 </div>
     
 <!-- Edit Post Modal -->
-<div id="edit-modal" tabindex="-2" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="edit-modal" tabindex="1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
@@ -214,7 +214,7 @@
 </div>
 
 <!-- Add Post Modal -->
-<div id="addPost" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="addPost" tabindex="2" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
