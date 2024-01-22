@@ -1,11 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { NavComponent } from '../../shared/components/nav/nav.component';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { PostData, ReturnedData } from '../../core/models/post-data';
 import { PostService } from '../../core/services/post.service';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule} from '@angular/forms';
 import { CommentService } from '../../core/services/comment.service';
 import { initFlowbite } from 'flowbite';
 
@@ -17,7 +16,6 @@ import { initFlowbite } from 'flowbite';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NavComponent,
     CardComponent,
     RouterOutlet
   ],
@@ -36,7 +34,7 @@ export class PostComponent {
   postService = inject(PostService)
   commentService = inject(CommentService)
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private router: Router) {
     this.getPosts()
   }
   ngOnInit() {
@@ -75,7 +73,7 @@ export class PostComponent {
     // })
   }
   
-  getPosts(page: number = 1, limit: number = 50) {
+  getPosts(page: number = 1, limit: number = 10) {
     return this.postService.getPosts(page, limit).subscribe({
       next: (data : ReturnedData) => {
         this.postData = data.data;
@@ -159,8 +157,9 @@ export class PostComponent {
     this.currentPost = post;
   }
 
-}
-function Flowbite(): (target: typeof PostComponent) => void | typeof PostComponent {
-  throw new Error('Function not implemented.');
+  fetchPostDetails(post: PostData){
+    this.router.navigate(['/post', post.id],)
+  }
+
 }
 
