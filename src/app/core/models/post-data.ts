@@ -17,6 +17,13 @@ export interface IUser {
     picture?: string,
 }
 
+export interface IComment {
+    message: string,
+    owner: IUser,
+    post: string,
+    publishDate: string,
+}
+
 export interface ReturnedData {
     data: Array<PostData>,
     total: number,
