@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { PostData, ReturnedData } from '../../core/models/post-data';
@@ -7,6 +7,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule} from '@angular/forms';
 import { CommentService } from '../../core/services/comment.service';
 import { initFlowbite } from 'flowbite';
+
+import { Store, } from '@ngrx/store';
+import { loadPosts } from '../../store/post/post.actions';
+import { selectPosts, limit } from '../../store/post/post.selectors';
 
 
 @Component({
@@ -17,15 +21,14 @@ import { initFlowbite } from 'flowbite';
     FormsModule,
     ReactiveFormsModule,
     CardComponent,
-    RouterOutlet
   ],
-  providers: [ PostService, CommentService ],
+  providers: [ PostService, CommentService],
   templateUrl: './post.component.html',
   styleUrl: './post.component.css'
 })
-export class PostComponent {
+export class PostComponent implements OnInit {
   currentPost!: PostData;
-  postData!: Array<PostData>
+  postData = this.store.select(selectPosts)
   totalData: number = 0
   page: number = 0
   limit: number = 0
@@ -34,11 +37,8 @@ export class PostComponent {
   postService = inject(PostService)
   commentService = inject(CommentService)
 
-  constructor(private _fb: FormBuilder, private router: Router) {
-    this.getPosts()
-  }
-  ngOnInit() {
-    initFlowbite()
+  constructor(private _fb: FormBuilder, private router: Router, private store: Store) {
+    initFlowbite();
 
     this.addPostFormGroup = this._fb.group({
       text: ['', [Validators.required, Validators.maxLength(50)]],
@@ -54,97 +54,28 @@ export class PostComponent {
       likes: ['', Validators.required],
       tags: ['', Validators.required]
     })
-
-    // this.commentService.getCommentsbyPost('60d21b4967d0d8992e610c8f').subscribe({
-    //   next: data => {
-    //     console.log(data);
-    //   },
-    //   error: err => {
-    //     console.error(err)
-    //   }
-    // })
-    // this.commentService.getComments().subscribe({
-    //   next: data => {
-    //     console.log(data);
-    //   },
-    //   error: err => {
-    //     console.error(err)
-    //   }
-    // })
+  }
+  ngOnInit() {
+    this.store.dispatch(loadPosts());
+    setTimeout(() => {
+      console.log(this.store.select(limit))      
+    }, 2000)
   }
   
   getPosts(page: number = 1, limit: number = 10) {
-    return this.postService.getPosts(page, limit).subscribe({
-      next: (data : ReturnedData) => {
-        this.postData = data.data;
-        // console.log(data);
-        
-        this.totalData = data.total;
-        this.limit = data.limit;
-        this.page = data.page;
-        window.scroll(0,0);
-      },
-      error: err => {
-        console.error(err)
-      }
-    })
+   
   }
 
   deletePost(id: string) {
-    this.postService.deletePost(id).subscribe({
-      next: data => {
-        this.getPosts()
-        console.log(data)
-      },
-      error: error => {
-        console.error(error)
-      }
-    })
+    
   }
 
   addPost() {
-    this.postService.createPost(this.addPostFormGroup.value).subscribe({
-      next: data => {
-        console.log('Form Value: ',this.addPostFormGroup.value)
-        this.getPosts()
-        console.log('Return Data: ',data)
-        this.addPostFormGroup.reset(
-          {
-            text: '',
-            image: '',
-            likes: 0,
-            tags: ["shopping", 'shoes','men'],
-            owner: '60d0fe4f5311236168a10a1e',
-          }
-        )
-      },
-      error: error => {
-        console.error(error)
-      }
-    })
+    
   }
 
   updatePost() {
-    this.postService.updatePost(this.currentPost.id, this.editPostFormGroup.value)
-    .subscribe({
-      next: data => {
-        console.log('Form Value: ',this.addPostFormGroup.value)
-        this.getPosts()
-        console.log('Return Data: ',data)
-        this.addPostFormGroup.reset(
-          {
-            text: '',
-            image: '',
-            likes: 0,
-            tags: ["shopping", 'shoes','men'],
-            owner: '60d0fe4f5311236168a10a1e', //Niklas
-          }
-        )
-      },
-      error: error => {
-        console.error(error)
-      }
-    })
+    
   }
 
   getUrl(event: any) {
@@ -159,6 +90,10 @@ export class PostComponent {
 
   fetchPostDetails(post: PostData){
     this.router.navigate(['/post', post.id],)
+  }
+
+  truncNum(num: number){
+    return num >= 10? "9+": num;
   }
 
 }
