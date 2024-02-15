@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { PostData, ReturnedData } from '../models/post-data';
 import { environment } from '../../../environments/environment.development';
+import { SkipLoading } from '../../shared/loading-indicator/loading-interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +59,12 @@ export class PostService {
   }
 
   updatePost(id: string, post: PostData): Observable<ReturnedData> {
-    return this._http.put(`${this.baseUrl}post/${id}`, post, {headers: this.headers})
+    return this._http.put(`${this.baseUrl}post/${id}`, post, 
+      { //to skip loading indicator for this http request
+        headers: this.headers,
+        context: new HttpContext().set(SkipLoading, true),
+      }
+    )
     .pipe(map((response: any) => response),
     catchError((error: HttpErrorResponse) => {
       return throwError(error);
