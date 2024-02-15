@@ -10,7 +10,7 @@ import { initFlowbite } from 'flowbite';
 
 import { Store, } from '@ngrx/store';
 import { loadPosts } from '../../store/post/post.actions';
-import { selectPosts, limit } from '../../store/post/post.selectors';
+import { selectPosts, limit, total, page } from '../../store/post/post.selectors';
 
 
 @Component({
@@ -29,9 +29,12 @@ import { selectPosts, limit } from '../../store/post/post.selectors';
 export class PostComponent implements OnInit {
   currentPost!: PostData;
   postData = this.store.select(selectPosts)
+  total$ = this.store.select(total);
+  limit$ = this.store.select(limit)
+  page$ = this.store.select(page)
   totalData: number = 0
   page: number = 0
-  limit: number = 0
+  limit: number = 0;
   addPostFormGroup!: FormGroup;
   editPostFormGroup!: FormGroup;
   postService = inject(PostService)
@@ -56,10 +59,7 @@ export class PostComponent implements OnInit {
     })
   }
   ngOnInit() {
-    this.store.dispatch(loadPosts());
-    setTimeout(() => {
-      console.log(this.store.select(limit))      
-    }, 2000)
+    this.store.dispatch(loadPosts());    
   }
   
   getPosts(page: number = 1, limit: number = 10) {
