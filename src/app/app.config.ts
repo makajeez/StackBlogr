@@ -9,11 +9,13 @@ import { PostEffects } from './store/post/post.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule, provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouterStore } from '@ngrx/router-store';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     // provideRouter(routes),
     provideRouterStore(),
+    provideAnimationsAsync(),
     importProvidersFrom(
         RouterModule.forRoot(routes),
         HttpClientModule, 
@@ -26,6 +28,6 @@ export const appConfig: ApplicationConfig = {
             logOnly: !isDevMode(),
             autoPause: true
         }), 
-        ),
+    ),
 ]
 };
