@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { PostComponent } from './components/posts/post.component';
 import { NavComponent } from './shared/components/nav/nav.component';
+import { LoadingIndicatorComponent } from './shared/loading-indicator/loading-indicator.component';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ import { NavComponent } from './shared/components/nav/nav.component';
     HttpClientModule, 
     RouterOutlet, 
     PostComponent,
-    NavComponent
+    NavComponent,
+    LoadingIndicatorComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

@@ -1,2 +1,9 @@
 <app-nav></app-nav>
 <router-outlet></router-outlet>
+<loading-indicator [detectRouteTransitions]="true">
+    <ng-template #loading>
+        <div class="custom-spinner">
+        <!-- <img src="../assets/img/hourglassT.gif" /> -->  <!-- Custom Loading spinner  -->
+        </div>
+    </ng-template>
+</loading-indicator>
