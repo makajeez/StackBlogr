@@ -14,7 +14,10 @@ export class PostEffects {
     switchMap(() =>
       this.postService.getPosts().pipe(
         map((Post) => postActions.loadPostsSuccess({ 
-          Posts: Post
+          Posts: Post.data,
+          limit: Post.limit,
+          page: Post.page,
+          total: Post.total
         })),
         catchError(error => of(postActions.loadPostsFailure({ error })))
       )
