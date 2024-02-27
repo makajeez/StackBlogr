@@ -6,17 +6,19 @@ import { initFlowbite } from 'flowbite';
 import { PostComponent } from './components/posts/post.component';
 import { NavComponent } from './shared/components/nav/nav.component';
 import { LoadingIndicatorComponent } from './shared/loading-indicator/loading-indicator.component';
+import { MaterialModule } from './shared/material/material.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     CommonModule, 
-    HttpClientModule, 
+    HttpClientModule,
     RouterOutlet, 
     PostComponent,
     NavComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    MaterialModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
