@@ -17,7 +17,7 @@ export class PostService {
     this.headers = this.headers.append('app-id', environment.apiId);
   }
 
-  getPost(id: string, page: number = 1, limit: number = 10): Observable<ReturnedData> {
+  getPost(id: string, page: number = 1, limit: number = 10): Observable<PostData> {
     return this._http.get(`${this.baseUrl}post/${id}?page=${page}&limit=${limit}`, {headers: this.headers})
     .pipe(map((response: any) => response),
     catchError((error: HttpErrorResponse) => {
