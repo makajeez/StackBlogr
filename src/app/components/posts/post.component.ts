@@ -11,6 +11,7 @@ import { initFlowbite } from 'flowbite';
 import { Store, } from '@ngrx/store';
 import { loadPosts } from '../../store/post/post.actions';
 import { selectPosts, limit, total, page } from '../../store/post/post.selectors';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 
 @Component({
@@ -21,6 +22,7 @@ import { selectPosts, limit, total, page } from '../../store/post/post.selectors
     FormsModule,
     ReactiveFormsModule,
     CardComponent,
+    MatProgressSpinnerModule
   ],
   providers: [ PostService, CommentService],
   templateUrl: './post.component.html',
