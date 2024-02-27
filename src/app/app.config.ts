@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, isDevMode } from '@angular/core';
-import { RouterModule, provideRouter } from '@angular/router';
+import { RouterModule, provideRouter, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
 import { StoreModule, provideStore } from '@ngrx/store';
@@ -14,11 +14,11 @@ import { LoadingInterceptor } from './shared/loading-indicator/loading-intercept
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    // provideRouter(routes),
+    provideRouter(routes, withViewTransitions()),
     provideRouterStore(),
     provideAnimationsAsync(),
     importProvidersFrom(
-        RouterModule.forRoot(routes),
+        // RouterModule.forRoot(routes),
         HttpClientModule, 
         EffectsModule.forRoot([PostEffects]),
         StoreModule.forRoot({
