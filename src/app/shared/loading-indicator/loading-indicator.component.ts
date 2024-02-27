@@ -1,6 +1,6 @@
 import { AsyncPipe, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+// import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { Observable, tap } from 'rxjs';
 import { LoadingService } from './loading.service';
 import { RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/route
   templateUrl: "./loading-indicator.component.html",
   styleUrls: ["./loading-indicator.component.scss"],
   imports: [
-    MatProgressSpinnerModule, 
+    // MatProgressSpinnerModule, 
     AsyncPipe, 
     NgIf, 
     NgTemplateOutlet
