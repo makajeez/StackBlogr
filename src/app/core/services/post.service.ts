@@ -27,7 +27,10 @@ export class PostService {
   
   getPosts(page: number = 1, limit: number = 10): Observable<ReturnedData> {
     return this._http.get(`${this.baseUrl}post?page=${page}&limit=${limit}`, {headers: this.headers})
-    .pipe(map((response: any) => response),
+    .pipe(map((response: any) => {
+      console.log('Fetched Posts:', response)
+      return response;
+    }),
     catchError((error: HttpErrorResponse) => {
       return throwError(error);
     }));

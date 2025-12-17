@@ -4,8 +4,6 @@ import { RouterModule, provideRouter, withViewTransitions } from '@angular/route
 import { routes } from './app.routes';
 import { StoreModule, provideStore } from '@ngrx/store';
 import { EffectsModule, provideEffects } from '@ngrx/effects';
-import { postReducer } from './store/post/post.reducer';
-import { PostEffects } from './store/post/post.effects';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule, provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouterStore } from '@ngrx/router-store';
@@ -18,22 +16,19 @@ export const appConfig: ApplicationConfig = {
     provideRouterStore(),
     provideAnimationsAsync(),
     importProvidersFrom(
-        // RouterModule.forRoot(routes),
-        HttpClientModule, 
-        EffectsModule.forRoot([PostEffects]),
-        StoreModule.forRoot({
-            Posts: postReducer
-        }), 
+        HttpClientModule,
         StoreDevtoolsModule.instrument({
             maxAge: 25,
             logOnly: !isDevMode(),
             autoPause: true
-        }), 
+        })
     ),
     {
         provide: HTTP_INTERCEPTORS,
         useClass: LoadingInterceptor,
         multi: true,
     },
-]
+    provideStore(),
+    provideEffects()
+  ]
 };

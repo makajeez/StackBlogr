@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { CardComponent } from '../../shared/components/card/card.component';
+// import { CardComponent } from '../../shared/components/card/card.component';
 import { PostData, ReturnedData } from '../../core/models/post-data';
 import { PostService } from '../../core/services/post.service';
 import { CommonModule } from '@angular/common';
@@ -9,8 +9,6 @@ import { CommentService } from '../../core/services/comment.service';
 import { initFlowbite } from 'flowbite';
 
 import { Store, } from '@ngrx/store';
-import { loadPosts } from '../../store/post/post.actions';
-import { selectPosts, limit, total, page } from '../../store/post/post.selectors';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 
@@ -21,7 +19,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CardComponent,
+    // CardComponent,
     MatProgressSpinnerModule
   ],
   providers: [ PostService, CommentService],
@@ -30,10 +28,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 })
 export class PostComponent implements OnInit {
   currentPost!: PostData;
-  postData = this.store.select(selectPosts)
-  total$ = this.store.select(total);
-  limit$ = this.store.select(limit)
-  page$ = this.store.select(page)
+  postData: PostData[] = [];
   totalData: number = 0
   page: number = 0
   limit: number = 0;
@@ -42,8 +37,8 @@ export class PostComponent implements OnInit {
   postService = inject(PostService)
   commentService = inject(CommentService)
 
-  constructor(private _fb: FormBuilder, private router: Router, private store: Store) {
-    initFlowbite();
+  constructor(private _fb: FormBuilder, private router: Router) {
+    
 
     this.addPostFormGroup = this._fb.group({
       text: ['', [Validators.required, Validators.maxLength(50)]],
@@ -61,7 +56,13 @@ export class PostComponent implements OnInit {
     })
   }
   ngOnInit() {
-    this.store.dispatch(loadPosts());    
+    initFlowbite();
+    this.postService.getPosts(1,20).subscribe((data: ReturnedData) => {
+      this.postData = data.data;
+      this.totalData = data.total;
+      this.page = data.page;
+      this.limit = data.limit;
+    });
   }
   
   getPosts(page: number = 1, limit: number = 10) {

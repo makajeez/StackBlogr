@@ -2,47 +2,44 @@
 
     <div class="inline-flex">
         <div id="speed-dial-menu-horizontal" class="tooltip items-center me-4 space-x2 ltr:space-x-reverse">
-            <button type="button" data-modal-target="addPost" data-modal-toggle="addPost" class="flex justify-center items-center w-[52px] h-[52px] text-white hover:text-gray-500 bg-gray-500 rounded-full border border-indigo-900 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
+            <button data-modal-target="addPost" data-modal-toggle="addPost" type="button" class="flex justify-center items-center w-[52px] h-[52px] text-white hover:text-gray-500 bg-gray-500 rounded-full border border-indigo-900 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
                 <span class="material-symbols-outlined">add</span>
             </button>
             <span class="tooltiptext">Add Post</span>
             
-        </div>
-        
+        </div>      
     </div>
 
     <hr class="my-10">
 
     <div class="sm:grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-2 gap-10">
-
-    <!-- </div> *ngFor="let post of postData | async"> -->
-        @for (post of postData | async; track post.id) {
+        @for (post of postData; track post.id) {
             <div class="hover:bg-gray-900 hover:text-white transition duration-300 max-w-sm rounded overflow-hidden shadow-lg">
                 <div class="py-4 px-8">
-                    <!-- <img [src]="post.owner.picture" class="rounded-full h-12 w-12 mb-4">
-                    <h4 class="text-lg mb-3 font-semibold">{{post.owner.title | titlecase }} {{post.owner.firstName}} {{post.owner.lastName}}</h4> -->
                     <div class="inline-flex gap-1">
                         <img [src]="post.owner.picture" class="rounded-full h-12 w-12 mb-4 mr-1">
                         <div class="mr-1">
                             <span class="text-sm mr-2 font-light whitespace-nowrap"><strong>Author:</strong> {{post.owner.firstName}} {{post.owner.lastName}}</span><br>
                             <span class="text-sm mr-2 font-light"><strong>Posted:</strong> {{post.publishDate | date }}</span>
                         </div>
-                        <!-- <div class=""> -->
-                            <button type="button" data-modal-target="editPost" data-modal-toggle="editPost" class="tooltip relative inline-flex items-center p-1 text-sm text-center">
+                        <div id="speed-dial-menu-horizontal" class="tooltip items-center me-4 space-x2 ltr:space-x-reverse">
+                            <button data-modal-target="editPost" data-modal-toggle="editPost" type="button" class="tooltip relative inline-flex items-center p-1 text-sm text-center">
                                 <span class="material-symbols-outlined">
                                     edit
                                 </span>
-                                <span class="tooltiptext">edit</span>
                             </button>
-                            <button data-modal-target="deletePost" data-modal-toggle="deletePost"  type="button" class="tooltip relative inline-flex items-center p-1 text-sm text-center">
+                            <span class="tooltiptext">edit</span>
+                        </div>
+                        <div id="speed-dial-menu-horizontal" class="tooltip items-center me-4 space-x2 ltr:space-x-reverse">
+                             <button data-modal-target="deletePost" data-modal-toggle="deletePost"  type="button" class="tooltip relative inline-flex items-center p-1 text-sm text-center">
                                 <span class="material-symbols-outlined">
                                     delete
                                 </span>
                                 <span class="tooltiptext">delete post</span>
                             </button>
-
-                            
+                        </div>                    
                     </div>
+
                     <div style="cursor:pointer" (click)="fetchPostDetails(post)">
                         <figure class="relative max-w-sm transition-all duration-300 filter gra hover:grayscale">
                             <img style="width: 100%; height:240px" class="rounded-lg" [src]="post.image" alt="image description">
@@ -63,26 +60,25 @@
                         <hr class="mt-4">
                         <p class="mb-2 text-sm ">{{post.text}}</p>
                     </div>
-
                 </div>
             </div>
-          } @empty {
+        } 
+        @empty {
             <p> There are no post at the moment. </p>
-          }
+        }
     </div>
 
     <hr class="my-10">
     
-    @if (total$ | async)
-    {
+   <!-- @if (total$ | async)
+     {
         <div class="relative flex -end-0 bottom-6 group">
             <div class="flex flex-col items-center">
-                <!-- Help text -->
-                <!-- <span class="text-sm text-gray-700 dark:text-gray-400">
+               
+                <span class="text-sm text-gray-700 dark:text-gray-400">
                     Showing <span class="font-semibold text-gray-900 dark:text-white">{{(limit-limit) + 1}}</span> to <span class="font-semibold text-gray-900 dark:text-white">{{(limit + limit)}}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{this.totalData}}</span> Entries
-                </span> -->
+                </span>
                 <div class="inline-flex mt-2 xs:mt-0">
-                <!-- Buttons -->
                 <button [ngClass]="{'bg-gray-300': (page$ | async) === 1, 'hover:bg-gray-300': (page$ | async) === 1 }" [disabled]="(page$ | async ) === 1" (click)="getPosts()" class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                     <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
@@ -98,7 +94,7 @@
                 </div>
             </div>
         </div>
-    }
+    } -->
 
 
 <!-- Modals -->
@@ -126,7 +122,7 @@
         </div>
     </div>
 </div>
-    
+
 <!-- Edit Post Modal -->
 <div id="editPost" tabindex="-1" aria-labelledby="editPost" role="dialog" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
@@ -215,10 +211,10 @@
 </div>
 
 <!-- Add Post Modal -->
-<div id="addPost" tabindex="-1" aria-labelledby="addPost" role="dialog" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+ <div id="addPost" tabindex="-1" aria-labelledby="addPost" role="dialog" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <!-- Modal header -->
+            
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                     Create New Post
@@ -230,7 +226,6 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <!-- Modal body -->
             <form class="p-4 md:p-5" [formGroup]="addPostFormGroup">
                 <div class="grid gap-4 mb-4 grid-cols-2">
                     <div class="col-span-2">
@@ -295,6 +290,6 @@
             </form>
         </div>
     </div>
-</div> 
+</div>
   
 </div>

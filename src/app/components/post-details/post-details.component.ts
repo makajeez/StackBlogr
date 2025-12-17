@@ -26,17 +26,17 @@ export class PostDetailsComponent implements OnInit{
   }
   
   ngOnInit() {
-    // let id = this.activateRoute.snapshot.paramMap.get('id');
+    let id = this.activateRoute.snapshot.paramMap.get('id');
     
-    //  this.postService.getPost(`${id}`).subscribe({
-    //   next: data => {
-    //     this.data$ = data;
-    //   }
-    // })
-    this.activateRoute.data.subscribe({
-      next: (data: any) => {
-        this.data$ = data
+     this.postService.getPost(`${id}`).subscribe({
+      next: data => {
+        this.data$ = data;
       }
     })
+    // this.activateRoute.data.subscribe({
+    //   next: (data: any) => {
+    //     this.data$ = data
+    //   }
+    // })
   }
 }
