@@ -33,10 +33,5 @@ export class PostDetailsComponent implements OnInit{
         this.data$ = data;
       }
     })
-    // this.activateRoute.data.subscribe({
-    //   next: (data: any) => {
-    //     this.data$ = data
-    //   }
-    // })
   }
 }

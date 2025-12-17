@@ -57,16 +57,28 @@ export class PostComponent implements OnInit {
   }
   ngOnInit() {
     initFlowbite();
-    this.postService.getPosts(1,20).subscribe((data: ReturnedData) => {
+    const posts = localStorage.getItem('posts');
+    if (posts) {
+      try {
+        console.log(posts)
+        this.postData = JSON.parse(posts).data as PostData[];
+      } catch {
+        // if stored data is corrupted, fall back to fetching fresh data
+        this.getPosts();
+      }
+    } else {
+      this.getPosts()
+    }
+  }
+  
+  getPosts(page: number = 1, limit: number = 20) {
+    this.postService.getPosts().subscribe((data: ReturnedData) => {
       this.postData = data.data;
       this.totalData = data.total;
       this.page = data.page;
       this.limit = data.limit;
+      localStorage.setItem('posts', JSON.stringify(data))
     });
-  }
-  
-  getPosts(page: number = 1, limit: number = 10) {
-   
   }
 
   deletePost(id: string) {
